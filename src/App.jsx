@@ -19,12 +19,18 @@ import { Toaster } from "react-hot-toast";
 import CategoryPage from "./pages/category/CategoryPage";
 import UserDashboard from "./pages/user/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import MyState from "./context/myState";
+import ProtectedRouteForAdmin from "./protectedRoute/ProtectedRouteForAdmin";
+import ProtectedRouteForUser from "./protectedRoute/ProtectedRouteForUser";
+import AddProductPage from "./pages/admin/AddProductPage";
+import UpdateProductPage from "./pages/admin/UpdateProductPage";
 
 const App = () => {
   return (
+    <MyState>
       <Router>
         <ScrollTop />
-        <Routes> 
+        <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/*" element={<NoPage />} />
           <Route path="/productinfo" element={<ProductInfo />} />
@@ -34,12 +40,16 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/category/:categoryname" element={<CategoryPage />} />  {/* category Page route  */}
           <Route path="/user-dashboard" element={
+            <ProtectedRouteForUser>
               <UserDashboard />
+            </ProtectedRouteForUser>
           } />
           <Route path="/admin-dashboard" element={
+            <ProtectedRouteForAdmin>
               <AdminDashboard />
+            </ProtectedRouteForAdmin>
           } />
-          {/* <Route path="/addproduct" element={
+          <Route path="/addproduct" element={
             <ProtectedRouteForAdmin>
               <AddProductPage />
             </ProtectedRouteForAdmin>
@@ -48,10 +58,11 @@ const App = () => {
             <ProtectedRouteForAdmin>
               <UpdateProductPage />
             </ProtectedRouteForAdmin>
-          } /> */}
+          } />
         </Routes>
         <Toaster />
       </Router>
+    </MyState>
   );
 }
 

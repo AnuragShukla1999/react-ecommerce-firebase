@@ -17,7 +17,7 @@ function MyState({ children }) {
         setLoading(true);
         try {
             const q = query(
-                collection(firDB, 'products'),
+                collection(fireDB, 'products'),
                 orderBy('time')
             );
 
@@ -92,7 +92,7 @@ function MyState({ children }) {
         setLoading(true);
         try {
             const q = query(
-                collection(firDB, "user"),
+                collection(fireDB, "user"),
                 orderBy('time')
             );
 

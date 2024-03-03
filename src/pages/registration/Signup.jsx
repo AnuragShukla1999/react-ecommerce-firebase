@@ -53,7 +53,7 @@ const Signup = () => {
             }
 
             // create user Reference
-            const userRefrence = collection(fireDb, "user") 
+            const userRefrence = collection(fireDB, "user") 
 
             addDoc(userRefrence, user);
 
@@ -135,6 +135,7 @@ const Signup = () => {
                 <div className="mb-5">
                     <button
                         type='button'
+                        onClick={userSignupFunction}
                         className='bg-pink-500 hover:bg-pink-600 w-full text-white text-center py-2 font-bold rounded-md '
                     >
                       Signup
