@@ -86,17 +86,17 @@ const AllProduct = () => {
     context = useContext(myContext)
     return (
         <Layout>
-    <div className="py-8">
-            {/* Heading  */}
-            <div className="">
-                <h1 className=" text-center mb-5 text-2xl font-semibold">All Products</h1>
-            </div>
+            <div className="py-8">
+                {/* Heading  */}
+                <div className="">
+                    <h1 className=" text-center mb-5 text-2xl font-semibold">All Products</h1>
+                </div>
 
-            {/* main  */}
-            <section className="text-gray-600 body-font">
-                <div className="container px-5 lg:px-0 py-5 mx-auto">
-                    <div className="flex flex-wrap -m-4">
-                        {/* {productData.map((item, index) => {
+                {/* main  */}
+                <section className="text-gray-600 body-font">
+                    <div className="container px-5 lg:px-0 py-5 mx-auto">
+                        <div className="flex flex-wrap -m-4">
+                            {/* {productData.map((item, index) => {
                             const { image, title, price } = item
                             return (
                                 <div key={index} className="p-4 w-full md:w-1/4">
@@ -130,11 +130,11 @@ const AllProduct = () => {
                         })} */}
 
 
-                        {}
+                            { }
+                        </div>
                     </div>
-                </div>
-            </section>
-        </div>
+                </section>
+            </div>
         </Layout>
     );
 }
