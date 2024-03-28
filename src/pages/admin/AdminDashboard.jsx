@@ -4,7 +4,7 @@ import OrderDetail from '../../components/admin/OrderDetail';
 import UserDetail from '../../components/admin/UserDetail';
 
 const AdminDashboard = () => {
-    const user = JSON.parse(localStorage.getItem('users'));
+    const user = JSON.parse(localStorage.getItem('user'));
 
     return (
         <div>

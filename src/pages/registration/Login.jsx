@@ -42,23 +42,37 @@ const Login = () => {
                     where('uid', "==", users?.user?.uid)
                 );
                 const data = onSnapshot(q, (QuerySnapshot) => {
-                    let user;
-                    QuerySnapshot.forEach((doc) => doc.data());
-                    localStorage.setItem("users", JSON.stringify(user));
-                    setUserLogin({
-                        email: "",
-                        password: ""
+                    let user = null;
+
+
+                    QuerySnapshot.forEach((doc) => {
+                        // Assign the retrieved user data to the user variable
+                        user = doc.data();
                     });
-                    toast.success("Login Successfully");
-                    setLoading(false);
-                    if (user.role === "user") {
-                        navigate('/user-dashboard');
+
+                    if (user) {
+                        localStorage.setItem("user", JSON.stringify(user));
+
+                        setUserLogin({
+                            email: "",
+                            password: ""
+                        });
+
+                        toast.success("Login Successfully");
+                        setLoading(false);
+
+                        if (user.role === "user") {
+                            navigate('/user-dashboard');
+                        } else {
+                            navigate('/admin-dashboard');
+                        }
                     } else {
-                        navigate('/admin-dashboard');
+                        setLoading(false);
+                        toast.error("User not found");
                     }
                 });
 
-                return data;
+                return () => data;
             } catch (error) {
                 console.log(error);
                 setLoading(false);
