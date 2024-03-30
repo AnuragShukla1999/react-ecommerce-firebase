@@ -38,7 +38,7 @@ const CartPage = () => {
     }, [cartItems])
 
     // user
-    const user = JSON.parse(localStorage.getItem('users'))
+    const user = JSON.parse(localStorage.getItem('user'))
 
     // Buy Now Function
     const [addressInfo, setAddressInfo] = useState({

@@ -1,62 +1,64 @@
 import { useContext, useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import myContext from "../../context/myContext";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
+import { fireDB } from "../../firebase/FirebaseConfig";
+import { doc, getDoc } from "firebase/firestore";
+import Loader from "../../components/loader/Loader";
 import { useDispatch, useSelector } from "react-redux";
-import { addTocart, deleteFromCart } from "../../redux/cartSlice";
 import toast from "react-hot-toast";
+import { addTocart, deleteFromCart } from "../../redux/cartSlice";
 
 const ProductInfo = () => {
-
     const context = useContext(myContext);
     const { loading, setLoading } = context;
 
-    const [product, setProduct] = useState('');
-    console.log(product);
+    const [product, setProduct] = useState('')
+    // console.log(product)
 
-    const { id } = useParams();
+    const { id } = useParams()
 
-    console.log(product);
+    // console.log(product)
 
     // getProductData
     const getProductData = async () => {
-        setLoading(true);
+        setLoading(true)
         try {
-            const productTemp = await getProductData(doc(fireDB, "products", id))
-
-            setProduct({ ...productTemp.data(), id: productTemp.id })
-            setLoading(false);
+            const productTemp = await getDoc(doc(fireDB, "products", id))
+            // console.log({...productTemp.data(), id : productTemp.id})
+            setProduct({...productTemp.data(), id : productTemp.id})
+            setLoading(false)
         } catch (error) {
-            console.log(error);
-            setLoading(false);
+            console.log(error)
+            setLoading(false)
         }
     }
 
-    const cartItem = useSelector((state) => state.cart);
+    const cartItems = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     const addCart = (item) => {
-        
+        // console.log(item)
         dispatch(addTocart(item));
-        toast.success("Add to Cart");
+        toast.success("Add to cart")
     }
 
     const deleteCart = (item) => {
         dispatch(deleteFromCart(item));
-        toast.success("Deleted To Cart");
+        toast.success("Delete cart")
     }
 
+    // console.log(cartItems)
 
     useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cartItem))
-    }, [cartItem]);
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+    }, [cartItems])
 
 
     useEffect(() => {
         getProductData()
+
     }, [])
-
-
     return (
         <Layout>
             <section className="py-5 lg:py-16 font-poppins dark:bg-gray-800">
@@ -155,9 +157,11 @@ const ProductInfo = () => {
                                         </div>
                                         <div className="mb-6">
                                             <h2 className="mb-2 text-lg font-bold text-gray-700 dark:text-gray-400">
+                                                Description :
                                             </h2>
                                             <p>{product?.description}</p>
                                         </div>
+
                                         <div className="mb-6 " />
                                         <div className="flex flex-wrap items-center mb-6">
                                             {cartItems.some((p) => p.id === product.id)
@@ -166,20 +170,16 @@ const ProductInfo = () => {
                                                     onClick={() => deleteCart(product)}
                                                     className="w-full px-4 py-3 text-center text-white bg-red-500 border border--600  hover:bg-red-600 hover:text-gray-100  rounded-xl"
                                                 >
+                                                    Delete to cart
                                                 </button>
                                                 :
                                                 <button
                                                     onClick={() => addCart(product)}
                                                     className="w-full px-4 py-3 text-center text-pink-600 bg-pink-100 border border-pink-600  hover:bg-pink-600 hover:text-gray-100  rounded-xl"
                                                 >
+                                                    Add to cart
                                                 </button>
                                             }
-                                        </div>
-                                        <div className="flex gap-4 mb-6">
-                                            <button
-                                                className="w-full px-4 py-3 text-center text-gray-100 bg-pink-600 border border-transparent dark:border-gray-700 hover:border-pink-500 hover:text-pink-700 hover:bg-pink-100 rounded-xl"
-                                            >
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -187,6 +187,7 @@ const ProductInfo = () => {
                         </div>
                     </>}
             </section>
+
         </Layout>
     );
 }

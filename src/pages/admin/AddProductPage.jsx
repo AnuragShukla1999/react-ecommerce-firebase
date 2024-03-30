@@ -3,7 +3,8 @@ import myContext from '../../context/myContext'
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../../components/loader/Loader';
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { fireDB } from "../../firebase/FirebaseConfig";
 
 const categoryList = [
   {
@@ -29,6 +30,9 @@ const categoryList = [
   },
   {
     name: 'books'
+  }, 
+  {
+    name: 'Underwear'
   }
 ]
 
