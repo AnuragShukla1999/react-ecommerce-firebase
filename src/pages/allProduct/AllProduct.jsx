@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router";
 import Layout from "../../components/layout/Layout";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import myContext from "../../context/myContext";
+import { useDispatch, useSelector } from "react-redux";
+import { addTocart, deleteFromCart } from "../../redux/cartSlice";
+import toast from "react-hot-toast";
 
 // productData 
 // const productData = [
@@ -84,10 +87,32 @@ const AllProduct = () => {
 
 
     const context = useContext(myContext);
-    const { getAllProduct } = context;
+    const { loading, getAllProduct } = context;
+
+    const cartItems = useSelector((state) => state.cart);
+    const dispatch = useDispatch();
+
+
+    const addCart = (item) => {
+
+        dispatch(addTocart(item));
+        toast.success("Added To Cart")
+    }
+
+
+    const deleteCart = (item) => {
+        dispatch(deleteFromCart(item));
+        toast.success("Deleted Cart Items")
+    }
+
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cartItems))
+    }, [cartItems]);
+
 
     return (
-        <Layout>
+        <Layout>                                                                            
             <div className="py-8">
                 {/* Heading  */}
                 <div className="">
@@ -154,8 +179,24 @@ const AllProduct = () => {
                                                     ₹{price}
                                                 </h1>
                                                 <div className="flex justify-center ">
-                                                    <button className=" bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
-                                                    Add To Cart </button>
+                                                    {cartItems.some((p) => p.id === item.id)
+
+                                                        ?
+                                                        <button 
+                                                            onClick={() => deleteCart(item)}
+                                                            className=" bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
+                                                            Delete To Cart 
+                                                        </button>
+
+                                                        :
+
+                                                        <button 
+                                                            onClick={() => addCart(item)}
+                                                            className=" bg-pink-500 hover:bg-pink-600 w-full text-white py-[4px] rounded-lg font-bold">
+                                                            Add To Cart 
+                                                        </button>
+                                                    }
+
                                                 </div>
                                             </div>
                                         </div>

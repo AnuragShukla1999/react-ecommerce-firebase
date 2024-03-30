@@ -3,6 +3,7 @@ import myContext from '../../context/myContext'
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import Loader from '../../components/loader/Loader';
+import { Timestamp } from 'firebase/firestore';
 
 const categoryList = [
   {
@@ -182,6 +183,7 @@ const AddProductPage = () => {
               type='button'
               className='bg-pink-500 hover:bg-pink-600 w-full text-white text-center py-2 font-bold rounded-md '
             >
+              Add Product
             </button>
           </div>
         </div>
